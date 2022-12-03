@@ -19,15 +19,17 @@ typedef struct ogrenci{
 
 
 void yazma(dugum *head){
-	fptr=fopen("ogrenci.txt","a");
+	fptr=fopen("ogrenci.txt","w");
 	if(fptr==NULL){
 		printf("dosya yok !");
 		exit (0);
 	}
 	for(dugum *temp=head;temp!=NULL;temp=temp->next){
-		fprintf(fptr,"Adi:%s\nSoyadi:%s\nNumarasi:%s\nVize Notu:%.1f\nFinal Notu:%.1f\n",temp->adi,temp->soyadi,temp->numarasi,temp->vize,temp->final);
+		fprintf(fptr,"\nAdi:%s\nSoyadi:%s\nNumarasi:%s\nVize Notu:%.1f\nFinal Notu:%.1f\n",temp->adi,temp->soyadi,temp->numarasi,temp->vize,temp->final);
 	}
 }
+
+
 
 
 
@@ -61,6 +63,9 @@ dugum *ekleme(dugum *head){
 	
 	return head;
 }
+
+
+
 
 dugum *silme(dugum *head){
 	system("cls");
@@ -121,7 +126,7 @@ dugum *listele(dugum *head){
 		
 		printf("-----------------------Ogrenci Listesi--------------------------\n");
 		while(temp!=NULL){
-			printf("\n%s numarali ogrencinin \n adi: %s \n soyadi: %s \n vize notu:%.1f \n final notu:%.1f",temp->numarasi, temp->adi, temp->soyadi, temp->vize, temp->final );
+			printf("\n%s numarali ogrencinin \n adi: %s \n soyadi: %s \n vize notu:%.1f \n final notu:%.1f\n",temp->numarasi, temp->adi, temp->soyadi, temp->vize, temp->final );
 			temp=temp->next;
 		}
 	}
@@ -129,17 +134,21 @@ dugum *listele(dugum *head){
 	return 0;
 }
 
-
+void goster(struct ogrenci *i){
+		printf("\n%s\n ",i->adi);
+}
 
 
 int main(){
 	int menu;
 	dugum *head=NULL;
+	printf("UYARI! Bu uygulama bagli liste kullanmaktadir. Yaptiginiz girdilerin dosyaya kayit olmasini istiyorsaniz lutfen dogru cikis yapiniz!");
 	while(1){
-		printf("\nBaslayrum aglamaya da \n");
-		printf("ogrenci kayidi yapmak icin 1'e basin \n");
+		printf("\nOgrenci kayit uygulamasi\n");
+		printf("ogrenci kayidi icin 1\n");
 		printf("var olan ogrenciyi silmek icin 2'e basin \n");
 		printf("ogrenci listesini gormek icin 3'e basin \n");
+		printf("dosyadan okuma icin 4\n");
 		printf("cikis yapmak icin 0\n");
 		scanf("%d",&menu);
 		switch(menu){
@@ -154,6 +163,23 @@ int main(){
 			
 			case 3:
 				head=listele(head);
+			break;
+			
+			case 4:
+				fptr=fopen("ogrenci.txt","r");
+				if(fptr==NULL){
+				printf("dosya yok !");
+				exit (0);
+				}
+				
+				printf("Ogrenci listesi asagidaki gibidir. \n");
+				while(!feof(fptr)){
+				fread(&head,sizeof(struct ogrenci),1,fptr);
+				goster(&head);
+				}
+	
+				fclose(fptr);
+				
 			break;
 			
 			case 0:
