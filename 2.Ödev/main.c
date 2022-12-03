@@ -66,9 +66,8 @@ dugum *ekleme(dugum *head){
 
 
 
-
 dugum *silme(dugum *head){
-	system("cls");
+	
 	if(head=NULL){
 		printf("kayıtli herhangi bir ogrenci yok!");
 	}
